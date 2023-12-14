@@ -32,9 +32,9 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => {
             console.error('Erreur de récupération des travaux :', error);
         });
+    });
 
-
-       
+         
 /************Ajouter le tri des projets par catégorie dans la galerie *******/
 document.addEventListener('DOMContentLoaded', function() {
     let allWorks = []; // Variable pour stocker tous les travaux récupérés
@@ -88,6 +88,3 @@ function displayWorks(works, galleryContainer) {
         galleryContainer.appendChild(figure);
     });
 }
-});
-
-
