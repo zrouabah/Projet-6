@@ -1,90 +1,162 @@
-document.addEventListener('DOMContentLoaded', function () {
-    // Section 1: Récupération des travaux via l'API et affichage initial dans la galerie
-    fetch('http://localhost:5678/api/works')
-        .then(response => response.json())
-        .then(data => {
-            console.log("Réponse de l'API :", data);
+let categories = [];
+let allWorks = [];
 
-            // Sélectionner la galerie
-            const gallery = document.querySelector('.gallery');
+// chercher les {id: 0, name: 'Tous'}categories depuis le backend
+checkIfConnected();
+loadCategories();
+displayWorks();
 
-            // Vider la galerie actuelle
-            gallery.innerHTML = '';
-
-            // Ajouter les travaux à la galerie
-            data.forEach(work => {
-                const figure = document.createElement('figure');
-                const img = document.createElement('img');
-                const figcaption = document.createElement('figcaption');
-
-                img.src = work.imageUrl;
-                img.alt = work.title;
-                figcaption.textContent = work.title;
-
-                figure.appendChild(img);
-                figure.appendChild(figcaption);
-
-                gallery.appendChild(figure);
-            });
-
-            console.log("Contenu de la galerie après ajout :", gallery.innerHTML);
-        })
-        .catch(error => {
-            console.error('Erreur de récupération des travaux :', error);
+function loadCategories() {
+  fetch("http://localhost:5678/api/categories")
+    .then(response => {
+      console.log(response);
+      if (response.ok)
+        return response.json();
+    })
+    .then(data => {
+      if (data) {
+        data.forEach(element => {
+          categories.push(element);
         });
-    });
+        console.log(categories);
+        document.getElementById("0").addEventListener('click', () => {
 
-         
-/************Ajouter le tri des projets par catégorie dans la galerie *******/
-document.addEventListener('DOMContentLoaded', function() {
-    let allWorks = []; // Variable pour stocker tous les travaux récupérés
-
-    fetch('http://localhost:5678/api/works')
-        .then(response => response.json())
-        .then(data => {
-            allWorks = data; // Stocke tous les travaux récupérés
-
-            // Affiche tous les travaux au chargement de la page
-            displayWorks(allWorks, document.querySelector('.gallery'));
-
-            const buttons = document.querySelectorAll('.button-container button');
-
-            buttons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const category = button.id; // Récupère l'ID du bouton (correspondant à la catégorie)
-
-                    if (category === 'tousButton') {
-                        // Affiche tous les travaux si le bouton "Tous" est cliqué
-                        displayWorks(allWorks, document.querySelector('.gallery'));
-                    } else {
-                        const filteredWorks = allWorks.filter(work => work.category.name === category);
-                        // Filtrer et afficher les travaux de la catégorie correspondante
-                        displayWorks(filteredWorks, document.querySelector('.gallery'));
-                    }
-                });
-            });
-        })
-        .catch(error => {
-            console.error('Erreur de récupération des travaux :', error);
+          const gallery = document.querySelector('.gallery');
+          gallery.innerHTML = '';
+          allWorks.forEach((item) => {
+            const figure = createFigure(item);
+            gallery.appendChild(figure);
+          });
         });
-});
-
-// Fonction générique pour afficher les travaux dans une galerie
-function displayWorks(works, galleryContainer) {
-    galleryContainer.innerHTML = '';
-
-    works.forEach(work => {
-        const figure = document.createElement('figure');
-        const img = document.createElement('img');
-        const figcaption = document.createElement('figcaption');
-
-        img.src = work.imageUrl;
-        img.alt = work.title;
-        figcaption.textContent = work.title;
-
-        figure.appendChild(img);
-        figure.appendChild(figcaption);
-
-        galleryContainer.appendChild(figure);
+        displayFilters(categories);
+        addOptionsInSelect(categories);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      alert("Une erreur est survenue, veuillez contacter l'administrateur du site !");
     });
+}
+
+function displayFilters(categories) {
+  const filters = document.querySelector(".filters");
+  categories.forEach(element => {
+    const filter = document.createElement("div");
+    filter.className = "filter";
+    filter.setAttribute("id", element.id);
+    filter.textContent = element.name;
+    filters.appendChild(filter);
+
+    filter.addEventListener('click', () => {
+      const filterId = parseInt(filter.getAttribute('id'));
+      const filteredWorks = allWorks.filter((work) => work.categoryId === filterId);
+      const gallery = document.querySelector('.gallery');
+      gallery.innerHTML = '';
+      filteredWorks.forEach((item) => {
+        const figure = createFigure(item);
+        gallery.appendChild(figure);
+      });
+    })
+  })
+}
+
+async function fetchWorks() {
+  const response = await fetch("http://localhost:5678/api/works");
+  return await response.json();
+}
+
+function displayWorks() {
+  const projets = fetchWorks().then((data) => {
+    allWorks = data;
+
+    const gallery = document.querySelector(".gallery");
+    console.log(projets);
+    allWorks.forEach((item) => {
+      const figure = createFigure(item);
+      gallery.appendChild(figure);
+
+    });
+  }).catch((error) => {
+    console.log(error);
+    alert("Une erreur est survenue ! Veuillez contacter l'administrateur du site !")
+  });
+
+}
+
+function createFigure(projet) {
+  const figure = document.createElement("figure");
+  figure.id = "figure" + projet.id;
+  figure.dataset.categoryId = projet.categoryId;
+  const image = document.createElement("img");
+  image.src = projet.imageUrl;
+  image.alt = projet.title;
+  const title = document.createElement("figcaption");
+  title.textContent = projet.title;
+
+  figure.appendChild(image);
+  figure.appendChild(title);
+  return figure;
+}
+
+function checkIfConnected() {
+  // si je suis authentifié j'ai un token  sinon non !
+  if (localStorage.getItem("token")) {
+    //cacher login 
+    const login = document.getElementById("login");
+    login.style.display = "none";
+    //afficher logout
+    const logout = document.getElementById("logout");
+    logout.style.display = "block";
+    logout.addEventListener('click', () => {
+      /* localStorage.removeItem('token');
+       localStorage.removeItem('userId');*/
+      localStorage.clear();
+      window.location.reload();
+    });
+    //Ajouter un actionListener clcik de logout 
+    //afficher la barre noir et les boutons modifier
+    const bar = document.querySelector(".bar");
+    bar.style.display = "flex"
+
+    const allBtnModifier = document.querySelectorAll(".btnModifier");
+    allBtnModifier.forEach(element => {
+      element.style.display = "flex";
+    });
+    //cacher les filtres
+    const filters = document.querySelector(".filters");
+    filters.style.display = "none";
+
+  }
+  else {
+    //afficher login 
+    const login = document.getElementById("login");
+    login.style.display = "block";
+    //cacher logout
+    const logout = document.getElementById("logout");
+    logout.style.display = "none";
+    //cacher la barre noir et les boutons modifier
+    const bar = document.querySelector(".bar");
+    bar.style.display = "none"
+
+    const allBtnModifier = document.querySelectorAll(".btnmodifier");
+    allBtnModifier.forEach(element => {
+      element.style.display = "none";
+    });
+    //afficher les filtres
+    const filters = document.querySelector(".filters");
+    filters.style.display = "flex";
+
+  }
+}
+
+
+function addOptionsInSelect(categories) {
+  const category = document.getElementById("category");
+  category.innerHTML = "";
+  categories.forEach(element => {
+    const option = document.createElement('option');
+    option.value = element.id;
+    option.text = element.name;
+    category.appendChild(option);
+  });
 }

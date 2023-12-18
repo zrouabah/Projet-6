@@ -30,9 +30,10 @@
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
         <ul>
-          <li>projets</li>
-          <li>contact</li>
-          <li><a href = "./login.html">login</a></li>
+          <li><a href="#portfolio" class="itemMenu"> projets </a></li>
+          <li><a href="#contact" class="itemMenu"> contact </a></li>
+          <li><a id="login" href="./login.html" class="itemMenu">login</a></li>
+          <li><a id="logout" class="itemMenu">logout</a></li>
           <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
         </ul>
       </nav>
@@ -41,10 +42,6 @@
       <section id="introduction">
         <figure>
           <img src="./assets/images/sophie-bluel.png" alt="" />
-          <div class="modeEdition modeEditionBlack btnmodifier">
-            <i class="fa-regular fa-pen-to-square"></i>
-            <p>Modifier</p>
-          </div>
         </figure>
         <article>
           <h2>Designer d'espace</h2>
@@ -66,6 +63,7 @@
         </article>
       </section>
       <section id="portfolio">
+      
         <div class="entetePortfolio">
           <h2>Mes Projets</h2>
           <!-- Trigger/Open The Modal -->
@@ -75,11 +73,8 @@
           </div>
         </div>
             
-        <div class="button-container">
-          <button id="tousButton">Tous</button>
-          <button id="Objets">Objets</button>
-          <button id="Appartements">Appartements</button>
-          <button id="Hotels & restaurants">Hotels & restaurants</button>
+        <div class="filters">
+          <div class="filter" id="0">Tous</div>
         </div>
         <div class="gallery"></div>
       </section>
@@ -167,7 +162,7 @@
                   <input id="title" name="title" type="text" />
                 </div>
                 <div>
-                  <label for="category">Catégorie</label>
+                  <label for="categorySelect">Catégorie</label>
                   <select id="category" name="category">
                     <option value="">Veuillez choisir une catégorie</option>
                   </select>

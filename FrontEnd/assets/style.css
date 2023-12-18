@@ -89,6 +89,7 @@ section {
 	display: flex;
 	flex-direction: row;
 	cursor: pointer;
+	margin-bottom: 1rem;
 }
 
 .modeEditionBlack {
@@ -157,6 +158,7 @@ li:hover {
 	flex: 1
 }
 #introduction h2 {
+	
 	margin-bottom: 1em;
 }
 
@@ -167,24 +169,13 @@ li:hover {
 	text-align: center;
 	margin-bottom: 1em;
 }
-.projetElement{
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	gap: 20px;
-}
-.projetElement i{
-	margin-right: -10px;
-}
-.projetElement a{
-	margin: 0;
-	text-decoration: none;
-	color: black;
-}
-.projetElement a, i {
-    margin-bottom: 1rem;
-	line-height: 16px;
-	
+
+.entetePortfolio{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+gap:20px
 }
 
 .category-input {
@@ -202,39 +193,39 @@ li:hover {
     transform: translateY(-50%);
 }
 
-.button-container{
-	text-align: center;
-	margin-bottom: 40px;
-}
-.button-container button:hover {
-    background-color:#1D6154;
-	color: white;
+.filters {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 20px;
+	margin-bottom: 30px;
 }
 
-button{
-	background-color: white;
-	border-radius: 10px;
-	color: #1D6154;
-	border: 1px solid #1D6154;
+.filter {
+	border: 1px solid;
+	border-color: #1D6154;
+	color:#1D6154;
 	border-radius: 60px;
-	width: auto;
-	height: 37px;
-	font-size: 16px;
-	font-weight: 500;
-}
-#tousButton{
-	width: 100px;
-}
-#objetsButton{
-	width: 100px;
-}
-#appartementsButton{
-	width: 128px;
-}
-#hotelsansrestaurantsButton{
-	width: 198px;
+	display: flex;
+	align-items: center;
+	padding: 20px;
+	font-family: 'syne';
+	cursor: pointer;
 }
 
+.filter:hover {
+	border: 1px solid;
+	border-color: #1D6154;
+	background-color: #1D6154;
+	color: white;
+	border-radius: 60px;
+	display: flex;
+	align-items: center;
+	padding: 20px;
+	font-family: 'syne';
+	cursor: pointer;
+
+}
 .gallery {
 	width: 100%;
 	display: grid;
