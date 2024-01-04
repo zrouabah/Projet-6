@@ -47,7 +47,11 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
-
+function displayErrorMessage(message) {
+    const errorMessageContainer = document.getElementById('errorMessageContainer');
+    errorMessageContainer.textContent = message;
+    errorMessageContainer.style.color = 'red';
+}
 function createGalleryModale() {
 
     const galleryModaleImg = document.querySelector(".galleryModaleImg");
@@ -172,14 +176,22 @@ if (formulaireAjout) {
         ajoutProjet();
     });
 }
+function resetModal2() {
+    const galleryModaleImg = document.querySelector(".galleryModaleImg");
+    galleryModaleImg.innerHTML = '';
 
+    const formulaireAjout = document.querySelector('#form');
+    if (formulaireAjout) {
+        formulaireAjout.reset();
+    }
+}
 function ajoutProjet() {
     const image = document.getElementById('file').files[0];
     const title = document.getElementById('title').value;
     const category = document.getElementById('category').value;
 
     if (!image || title.trim() == "" || category.trim() == "") {
-        alert("Veuillez rentrer tous les champs.");
+        displayErrorMessage("Veuillez rentrer tous les champs");   
     } else {
         const formData = new FormData();
         formData.append('title', title);
@@ -196,13 +208,13 @@ function ajoutProjet() {
         })
             .then(response => {
                 if (response.status == 400) {
-                    alert("Veuillez verifier les champs saisis !");
+                    displayErrorMessage("Veuillez vérifier les champs saisis !");
                 }
                 if (response.status == 401) {
-                    alert("Veuillez vous authentifier avant d'ajouter un projet !");
+                    displayErrorMessage("Veuillez vous authentifier avant d'ajouter un projet !");
                 }
                 if (response.status == 201) {
-                    alert("Projet ajouté avec succès !");
+                    displayErrorMessage("Projet ajouté avec succès !");
                     return response.json();
                 }
             })
@@ -220,6 +232,12 @@ function ajoutProjet() {
                     const gallery = document.querySelector(".gallery");
                     const figureIndex = createFigure(projet);
                     gallery.appendChild(figureIndex);
+
+                    // Réinitialiser le formulaire
+                    const formulaireAjout = document.querySelector('#form');
+                    if (formulaireAjout) {
+                        formulaireAjout.reset();
+                    }
 
                     returnButton.click();
                 }

@@ -22,18 +22,19 @@
       <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
       <nav>
         <ul>
-          <li>projets</li>
-          <li>contact</li>
-          <li>logout</li>
-          <li><img src="./assets/icons/instagram.png" alt="Instagram" /></li>
+            <li><a href="#portfolio" class="itemMenu"> Projets </a></li>
+            <li><a href="#contact" class="itemMenu"> Contact </a></li>
+            <li><a id="homeLink" href="./index.html" class="itemMenu"> Logout </a></li>
+         
         </ul>
-      </nav>
+    </nav>
     </header>
     <main>
       
       <section id="contact">
         <h2>log In</h2>
         <form action="#" method="post" id="loginForm">
+          <div id="error-message" class="error-message"></div>
           <label for="email">E-mail</label>
           <input type="email" name="email" id="email" required value="sophie.bluel@test.tld" />
           <label for="password">Mot de passe</label>

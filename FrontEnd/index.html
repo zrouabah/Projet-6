@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="./assets/style.css" />
     <link rel="stylesheet" href="./assets/modal.css" />
     <script
-    src="https://kit.fontawesome.com/3915166d08.js"
-    crossorigin="anonymous"
-  ></script>
+      src="https://kit.fontawesome.com/3915166d08.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <div class="bar">
@@ -63,16 +63,14 @@
         </article>
       </section>
       <section id="portfolio">
-      
         <div class="entetePortfolio">
           <h2>Mes Projets</h2>
-          <!-- Trigger/Open The Modal -->
           <div class="modeEdition modeEditionBlack btnmodifier">
             <i class="fa-regular fa-pen-to-square"></i>
             <p>Modifier</p>
           </div>
         </div>
-            
+
         <div class="filters">
           <div class="filter" id="0">Tous</div>
         </div>
@@ -100,82 +98,81 @@
         </ul>
       </nav>
     </footer>
-      <!-- The Modal -->
-      <div id="myModal" class="modal">
-        <!-- Modal content -->
-        <div class="modal-content">
-          <!-- Modal header -->
-          <div class="modal-header">
-            <span class="return">
-              <i class="fa-solid fa-arrow-left"></i>
-            </span>
-            <span class="close">&times;</span>
-          </div>
-  
-          <!-- Modal main -->
-          <div class="modal-main">
-            <div class="galleryModale">
-              <h4 class="galleryModaleTitle">Galerie photo</h4>
-              <div class="galleryModaleImg">
-                <!-- <i class="fa-thrash deleteIcon"></i> -->
-              </div>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <!-- Modal header -->
+        <div class="modal-header">
+          <span class="return">
+            <i class="fa-solid fa-arrow-left"></i>
+          </span>
+          <span class="close">&times;</span>
+        </div>
+
+        <!-- Modal main -->
+        <div class="modal-main">
+          <div class="galleryModale">
+            <h4 class="galleryModaleTitle">Galerie photo</h4>
+            <div class="galleryModaleImg">
+              <!-- <i class="fa-thrash deleteIcon"></i> -->
             </div>
-            <div class="modalBar"></div>
-            <div class="ajoutModale">
-              <div class="ajoutModaleBtn">Ajouter une photo</div>
-            </div>
-            <div class="supprimerGalerie">Supprimer la galerie</div>
           </div>
-  
-          <div class="modal-ajout">
-            <div class="galleryModaleTitle">Ajout photo</div>
-            <form id="form">
-              <div class="modal-ajout-img">
-                <div class="previewImage">
-                  <img
-                    id="image"
-                    src="./assets/images/abajour-tahina.png"
-                    alt="Image selectionné"
-                  />
-                  <span class="removeImage">&times;</span>
-                </div>
-                <div class="formImage">
-                  <i class="far fa-image"></i>
-                  <label
-                    class="ajout-btn"
-                    onclick="document.getElementById('file').click()"
-                    >+ Ajouter une photo</label
-                  >
-                  <input
-                    type="file"
-                    name="file"
-                    id="file"
-                    accept=".jpg, .jpeg, .png"
-                    onchange="previewImage(event)"
-                  />
-                  <div class="ajout-type">jpg, png : 4mo max</div>
-                </div>
-              </div>
-              <div class="inputs">
-                <div>
-                  <label for="title">Titre</label>
-                  <input id="title" name="title" type="text" />
-                </div>
-                <div>
-                  <label for="categorySelect">Catégorie</label>
-                  <select id="category" name="category">
-                    <option value="">Veuillez choisir une catégorie</option>
-                  </select>
-                </div>
-              </div>
-              <input class="btn-modal-valide" value="Valider" type="submit" />
-            </form>
+          <div class="modalBar"></div>
+          <div class="ajoutModale">
+            <div class="ajoutModaleBtn">Ajouter une photo</div>
           </div>
         </div>
+
+        <div class="modal-ajout">
+          <div id="errorMessageContainer"></div>
+          <div class="galleryModaleTitle">Ajout photo</div>
+          <form id="form">
+            <div class="modal-ajout-img">
+              <div class="previewImage">
+                <img
+                  id="image"
+                  src="./assets/images/abajour-tahina.png"
+                  alt="Image selectionné"
+                />
+                <span class="removeImage">&times;</span>
+              </div>
+              <div class="formImage">
+                <i class="far fa-image"></i>
+                <label
+                  class="ajout-btn"
+                  onclick="document.getElementById('file').click()"
+                  >+ Ajouter une photo</label
+                >
+                <input
+                  type="file"
+                  name="file"
+                  id="file"
+                  accept=".jpg, .jpeg, .png"
+                  onchange="previewImage(event)"
+                />
+                <div class="ajout-type">jpg, png : 4mo max</div>
+              </div>
+            </div>
+            <div class="inputs">
+              <div>
+                <label for="title">Titre</label>
+                <input id="title" name="title" type="text" />
+              </div>
+              <div>
+                <label for="categorySelect">Catégorie</label>
+                <select id="category" name="category">
+                  <option value="">Veuillez choisir une catégorie</option>
+                </select>
+              </div>
+            </div>
+            <input class="btn-modal-valide" value="Valider" type="submit" />
+          </form>
+        </div>
       </div>
-  
+    </div>
+
     <script defer src="./js/index.js"></script>
-  <script defer src="./js/modal.js"></script>
+    <script defer src="./js/modal.js"></script>
   </body>
-  
 </html>
