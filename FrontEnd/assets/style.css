@@ -112,6 +112,13 @@ ol,
 ul {
   list-style: none;
 }
+.iconInsta{
+width: 25px;
+font-weight: bold;
+}
+#homeLink{
+  font-weight: 900;
+}
 blockquote,
 q {
   quotes: none;

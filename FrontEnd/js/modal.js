@@ -137,7 +137,7 @@ function deleteProject(id) {
 }
 
 
-// Fonction pour prévisualiser une image
+// Fonction pour prévisualiser une image 
 function previewImage(e) {
 
     // Sélection de l'élément de prévisualisation de l'image
@@ -183,15 +183,36 @@ function resetModal2() {
     const formulaireAjout = document.querySelector('#form');
     if (formulaireAjout) {
         formulaireAjout.reset();
-    }
+    }  
 }
+// Fonction pour supprimer la prévisualisation de l'image dans la modale 2
+function deletepreviewImage() {
+    const image = document.getElementById('image');
+    const previewImageBlock = document.querySelector('.previewImage');
+    const formImageBlock = document.querySelector('.formImage');
+
+    image.src = "";
+    previewImageBlock.style.display = "none";
+    formImageBlock.style.display = "flex";
+}
+
+// Modifier l'écouteur d'événements existant pour le span removeImage
+removeImage.addEventListener("click", function (e) {
+    deletepreviewImage();
+});
 function ajoutProjet() {
     const image = document.getElementById('file').files[0];
     const title = document.getElementById('title').value;
     const category = document.getElementById('category').value;
 
-    if (!image || title.trim() == "" || category.trim() == "") {
-        displayErrorMessage("Veuillez rentrer tous les champs");   
+    if (!image || title.trim() === "" || category.trim() === "") {
+        displayErrorMessage("Veuillez renseigner tous les champs");
+
+        // Effacer le message d'erreur après 3 secondes
+        setTimeout(() => {
+            displayErrorMessage("");
+        }, 3000);
+
     } else {
         const formData = new FormData();
         formData.append('title', title);
@@ -207,28 +228,29 @@ function ajoutProjet() {
             body: formData,
         })
             .then(response => {
-                if (response.status == 400) {
+                if (response.status === 400) {
                     displayErrorMessage("Veuillez vérifier les champs saisis !");
-                }
-                if (response.status == 401) {
+                } else if (response.status === 401) {
                     displayErrorMessage("Veuillez vous authentifier avant d'ajouter un projet !");
-                }
-                if (response.status == 201) {
-                    displayErrorMessage("Projet ajouté avec succès !");
+                } else if (response.status === 201) {
                     return response.json();
+                } else {
+                    throw new Error('Erreur inattendue lors de l\'ajout du projet');
                 }
             })
             .then(projet => {
                 if (projet) {
                     console.log(projet);
-                    //Mettre à jour le tableau globale
+
+                    // Mettre à jour le tableau global
                     allWorks.push(projet);
-                    // Mettre à jout la modale : ajouter le nouveau projet sur la modale 
+
+                    // Mettre à jour la modale : ajouter le nouveau projet sur la modale
                     const galleryModaleImg = document.querySelector(".galleryModaleImg");
                     const figureModale = createImgModale(projet);
                     galleryModaleImg.appendChild(figureModale);
 
-                    // Mettre à jour la page index avec l'ajout du projet sur la page index 
+                    // Mettre à jour la page index avec l'ajout du projet sur la page index
                     const gallery = document.querySelector(".gallery");
                     const figureIndex = createFigure(projet);
                     gallery.appendChild(figureIndex);
@@ -239,12 +261,17 @@ function ajoutProjet() {
                         formulaireAjout.reset();
                     }
 
+                    // Appeler deletepreviewImage pour réinitialiser la prévisualisation de l'image dans la modale 2
+                    deletepreviewImage();
+                    
+                    // Fermer la modal
                     returnButton.click();
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert("Une erreur est survenue lors de l'ajout du projet !")
+                displayErrorMessage("Une erreur est survenue lors de l'ajout du projet !");
+
             });
     }
 }
