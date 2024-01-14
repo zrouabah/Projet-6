@@ -9,9 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const email = document.querySelector('#email').value;
       const password = document.querySelector('#password').value;
   
-      console.log('Email: ', email);
-      console.log('Mot de passe: ', password);
-  
   
       fetch("http://localhost:5678/api/users/login", {
         method: "POST",
@@ -30,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
             errorMessageContainer.textContent = "Identifiant ou mot de passe incorrect !";
         } else if (response.status == 404) {
             errorMessageContainer.textContent = "Utilisateur non inscrit !";
-        
         }
         errorMessageContainer.style.color = 'red';
         throw new Error("Erreur lors de la connexion.");
@@ -45,8 +41,6 @@ document.addEventListener('DOMContentLoaded', function () {
             errorMessageContainer.textContent = 'Erreur lors de la connexion. Veuillez réessayer.';
             errorMessageContainer.style.color = 'red';
         }
-    })
-    
-    
+    })   
     });
   });

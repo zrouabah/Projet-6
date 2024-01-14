@@ -9,7 +9,6 @@ displayWorks();
 function loadCategories() {
     fetch("http://localhost:5678/api/categories")
         .then(response => {
-            console.log(response);
             if (response.ok)
                 return response.json();
         })
@@ -19,7 +18,6 @@ function loadCategories() {
                 data.forEach(element => {
                     categories.push(element);
                 });
-                console.log(categories);
                 document.getElementById("0").addEventListener('click', () => {
 
                     const gallery = document.querySelector('.gallery');
@@ -34,7 +32,6 @@ function loadCategories() {
             }
         })
         .catch(error => {
-            console.log(error);
             alert("Une erreur est survenue, veuillez contacter l'administrateur du site !");
         });
 }
@@ -71,7 +68,6 @@ function displayWorks() {
         allWorks = data;
 
         const gallery = document.querySelector(".gallery");
-        console.log(projets);
         allWorks.forEach((item) => {
             const figure = createFigure(item);
             gallery.appendChild(figure);
@@ -147,8 +143,6 @@ function checkIfConnected() {
 
     }
 }
-
-
 function addOptionsInSelect(categories) {
     const category = document.getElementById("category");
     category.innerHTML = "";
@@ -159,3 +153,13 @@ function addOptionsInSelect(categories) {
         category.appendChild(option);
     });
 }
+// functuion pour actualiser la pgae d'accueil après supprerssion de photo sur la modal
+document.addEventListener('photoDeleted', function (event) {
+    const id = event.detail.id;
+
+    // Supprimer la photo de la page d'accueil
+    const projectToDelete = document.getElementById(`figure${id}`);
+    if (projectToDelete) {
+        projectToDelete.remove();
+    }
+});

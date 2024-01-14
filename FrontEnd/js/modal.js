@@ -108,34 +108,26 @@ function deleteProject(id) {
             Authorization: `Bearer ${localStorage.getItem('token')}`
         },
     })
-        .then(response => {
-            if (response.status == 204) {
-                // Delete the gallery item from the DOM
-                const figureToDelete = document.getElementById(`figureModale${id}`);
-                if (figureToDelete) {
-                    figureToDelete.remove();
-                }
-                // Supprimer le projet depuis la page index ( du dom ) 
-                const projectToDelete = document.getElementById(`projectItem${id}`);
-                if (projectToDelete) {
-                    projectToDelete.remove();
-                }
-                // supprimer le projet depuis le tableau allWorks
-                const projectIndex = allWorks.findIndex(project => project.id === id);
-                if (projectIndex !== -1) {
-                    allWorks.splice(projectIndex, 1);
-                }
-            } else {
-                console.error('Failed to delete project from API');
-                alert('Une erreur est survenue lors de la suppression du projet ! ');
+    .then(response => {
+        if (response.status == 204) {
+            // Supprimer le projet depuis la modale
+            const figureToDelete = document.getElementById(`figureModale${id}`);
+            if (figureToDelete) {
+                figureToDelete.remove();
             }
-        })
-        .catch(error => {
-            console.error('Une erreur est survenue lors de la suppression du projet !', error);
-        });
-    // fetch en delete pour supprimer le projet depuis l'api
-}
 
+            // Émettre un événement personnalisé pour indiquer la suppression
+            const event = new CustomEvent('photoDeleted', { detail: { id } });
+            document.dispatchEvent(event);
+        } else {
+            console.error('Failed to delete project from API');
+            alert('Une erreur est survenue lors de la suppression du projet ! ');
+        }
+    })
+    .catch(error => {
+        console.error('Une erreur est survenue lors de la suppression du projet !', error);
+    });
+}
 
 // Fonction pour prévisualiser une image 
 function previewImage(e) {
@@ -240,7 +232,6 @@ function ajoutProjet() {
             })
             .then(projet => {
                 if (projet) {
-                    console.log(projet);
 
                     // Mettre à jour le tableau global
                     allWorks.push(projet);
