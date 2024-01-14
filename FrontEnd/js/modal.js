@@ -1,4 +1,5 @@
 // Get the modal
+
 var modal = document.getElementById("myModal");
 const modalGallery = document.querySelector(".modal-main");
 const modalAjout = document.querySelector(".modal-ajout");
@@ -12,6 +13,10 @@ var span = document.getElementsByClassName("close")[0];
 var returnButton = document.querySelector(".return");
 var ajoutModaleBtn = document.querySelector(".ajoutModaleBtn");
 var galleryCreated = false;
+const ajoutBtn = document.querySelector('.ajout-btn');
+ajoutBtn.addEventListener('click', function() {
+    document.getElementById('file').click();
+});
 // When the user clicks on the button, open the modal
 listBtnModifier.forEach(btn => {
     btn.onclick = function () {
@@ -99,7 +104,6 @@ function createImgModale(projet) {
     return figure;
 
 }
-
 function deleteProject(id) {
     fetch(`http://localhost:5678/api/works/${id}`, {
         method: 'DELETE',
