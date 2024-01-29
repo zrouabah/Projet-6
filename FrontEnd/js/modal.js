@@ -41,12 +41,12 @@ returnButton.onclick = function () {
     returnButton.style.display = "none";
 }
 
-// When the user clicks on <span> (x), close the modal
+// au click sur close, pour fermer la modal
 span.onclick = function () {
     modal.style.display = "none";
 }
 
-// When the user clicks anywhere outside of the modal, close it
+// au click à l'exterieur de la modal
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = "none";
@@ -77,12 +77,13 @@ function createImgModale(projet) {
     image.src = projet.imageUrl;
 
     const editLink = document.createElement("p");
-    editLink.textContent = "éditer";
+    editLink.textContent = "";
     editLink.classList.add("editLink");
 
     const deleteButton = document.createElement("div");
     deleteButton.setAttribute("class", "deleteButton");
     deleteButton.addEventListener('click', () => {
+        //affiche une boîte de dialogue de confirmation et, si l'utilisateur confirme, appelle la fonction 
         const res = confirm("Etes vous sur de bien vouloir supprimer le projet " + projet.id + "?");
         if (res) {
             // supprimer le projet depuis l'api
@@ -109,15 +110,16 @@ function deleteProject(id) {
         method: 'DELETE',
         headers: {
             Accept: 'application/json',
+            //un moyen sécurisé de s'assurer que la personne effectuant l'action est authentifiée et a les autorisations appropriées
             Authorization: `Bearer ${localStorage.getItem('token')}`
         },
     })
     .then(response => {
         if (response.status == 204) {
-            // Supprimer le projet depuis la modale
+            // si l'élément HTML avec l'ID correspondant (figureModale${id}) existe dans le document
             const figureToDelete = document.getElementById(`figureModale${id}`);
             if (figureToDelete) {
-                figureToDelete.remove();
+                figureToDelete.remove(); //supprime l'élément du DOM
             }
 
             // Émettre un événement personnalisé pour indiquer la suppression
@@ -139,6 +141,7 @@ function previewImage(e) {
     // Sélection de l'élément de prévisualisation de l'image
     const image = document.getElementById("image");
     const removeImage = document.querySelector(".removeImage");
+    // pour supprimer l'image ajouter et afficher l'icone image
     removeImage.addEventListener("click", function (e) {
         image.src = "";
         previewImageBlock.style.display = "none";
@@ -152,6 +155,8 @@ function previewImage(e) {
 
     if (file && file.type.match("image.*") && file.size <= 4194304) {
         const reader = new FileReader(); // Créer un objet FileReader
+
+        // Attacher un gestionnaire d'événements onload
         reader.onload = function (e) {
 
             image.src = e.target.result;
@@ -200,7 +205,7 @@ function ajoutProjet() {
     const image = document.getElementById('file').files[0];
     const title = document.getElementById('title').value;
     const category = document.getElementById('category').value;
-
+    //si l'utilisateur n'a pas fourni une image, ou si le titre ou la catégorie est une chaîne vide
     if (!image || title.trim() === "" || category.trim() === "") {
         displayErrorMessage("Veuillez renseigner tous les champs");
 

@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         headers: {
           "Content-Type": "application/json"
         },
+        //convertir un objet JavaScript en une chaîne JSON
         body: JSON.stringify({
           email: email,
           password: password

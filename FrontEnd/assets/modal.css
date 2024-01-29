@@ -16,13 +16,15 @@
   .modal-content {
     background-color: #ffffff;
     margin: 15% auto; /* 15% from the top and centered */
-    padding: 40px;
+    padding: 0;
     border: 1px solid #888;
     border-radius: 25px;
-    width: 60%; /* Could be more or less, depending on screen size */
+    width: 630px;
+    height: 680px;
     display: flex;
     flex-direction: column;
     gap:15px;
+    align-items: center;
   }
   
   
@@ -41,7 +43,8 @@
     font-weight: bold;
     position: absolute;
     top : 0px;
-    right: 0px;
+    left: 250px;
+    margin-top: 20px;
   }
   
   .close:hover,
@@ -59,7 +62,9 @@
     font-weight: bold;
     position: absolute;
     top : 0px;
-    left: 0px;
+    right: 250px;
+    margin-top: 20px;
+   
   }
   
   .return:hover,
@@ -85,11 +90,12 @@
 .galleryModaleImg {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 15px;
+ 
 }
 
 .galleryModaleImg img {
-  width: 100%;
+  width: 76px;
+  height: auto;
 }
 
 .ajoutModale {
@@ -130,7 +136,7 @@
   line-height: 30px;
   letter-spacing: 0em;
   text-align: center;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
 }
 
 .figureModale{
@@ -150,7 +156,7 @@
   align-items: center;
   position: absolute;
   top:5px;
-  right: 5px;
+  right: 18px;
 }
 
 .deleteButton > i{
@@ -162,9 +168,7 @@
   height: 1px;
   background-color: #B3B3B3;
   margin-top: 40px;
-  margin-left: auto;
-  margin-right: auto;
-  display: flex;
+
   align-items: center;
 }
 
@@ -187,8 +191,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px 10%;
-  width: 80%;
+  width: 420px;
+  height: 169px;
 }
 .previewImage{
   width: 100%;

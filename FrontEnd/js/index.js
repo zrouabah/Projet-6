@@ -47,6 +47,7 @@ function displayFilters(categories) {
 
         filter.addEventListener('click', () => {
             const filterId = parseInt(filter.getAttribute('id'));
+            //On filtre les travaux (works) en ne gardant que ceux qui ont le même categoryId que le filtre sélectionné
             const filteredWorks = allWorks.filter((work) => work.categoryId === filterId);
             const gallery = document.querySelector('.gallery');
             gallery.innerHTML = '';
@@ -65,6 +66,7 @@ async function fetchWorks() {
 
 function displayWorks() {
     const projets = fetchWorks().then((data) => {
+// on stock les travaux récuperés dans la variables allWorks
         allWorks = data;
 
         const gallery = document.querySelector(".gallery");
@@ -81,6 +83,7 @@ function displayWorks() {
 
 function createFigure(projet) {
     const figure = document.createElement("figure");
+    //On attribue un identifiant unique à l'élément <figure> en concaténant "figure" avec l'identifiant du projet
     figure.id = "figure" + projet.id;
     figure.dataset.categoryId = projet.categoryId;
     const image = document.createElement("img");
@@ -104,9 +107,11 @@ function checkIfConnected() {
         const logout = document.getElementById("logout");
         logout.style.display = "block";
         logout.addEventListener('click', () => {
-            /* localStorage.removeItem('token');
-             localStorage.removeItem('userId');*/
+            
+            // Effacer le token du stockage local
             localStorage.clear();
+            // Recharger la page
+           
             window.location.reload();
         });
         //Ajouter un actionListener clcik de logout 
@@ -143,6 +148,7 @@ function checkIfConnected() {
 
     }
 }
+// pour gérer le choix  de catégorie sur la modal 2
 function addOptionsInSelect(categories) {
     const category = document.getElementById("category");
     category.innerHTML = "";
